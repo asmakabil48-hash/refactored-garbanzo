@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercices de récapitulation sur l'adjectif</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4a6fa5, #2c3e50);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .page-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .exercise-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .exercise-btn {
+            padding: 10px 18px;
+            background-color: #e9ecef;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-btn:hover {
+            background-color: #d0d7e0;
+        }
+
+        .exercise-btn.active {
+            background-color: #4a6fa5;
+            color: white;
+        }
+
+        .exercise-section {
+            display: none;
+        }
+
+        .exercise-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .exercise-title {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4a6fa5;
+        }
+
+        .exercise-instructions {
+            background-color: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #4a6fa5;
+        }
+
+        .instructions-icon {
+            color: #4a6fa5;
+            margin-right: 8px;
+        }
+
+        .poem {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2c3e50;
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+        }
+
+        .verse {
+            margin-bottom: 10px;
+        }
+
+        .verse-number {
+            color: #4a6fa5;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        .exercise-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #eaeaea;
+        }
+
+        .exercise-item-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .correction-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .correction-btn:hover {
+            background-color: #218838;
+        }
+
+        .answer-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .input-field {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1rem;
+            flex-grow: 1;
+            min-width: 200px;
+        }
+
+        .underline {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-decoration-color: #e74c3c;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .correction {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #d4edda;
+            border-radius: 5px;
+            border-left: 4px solid #28a745;
+        }
+
+        .correction.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .correction-title {
+            font-weight: 600;
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .correction-text {
+            color: #155724;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .note {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+            font-size: 0.95rem;
+        }
+
+        .answer-box {
+            display: inline-block;
+            min-width: 40px;
+            height: 24px;
+            border-bottom: 2px dashed #4a6fa5;
+            margin: 0 5px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .exercise-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: #3a5a80;
+        }
+
+        .nav-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: #e9ecef;
+            border-radius: 3px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #4a6fa5;
+            width: 14%;
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .exercise-nav {
+                justify-content: center;
+            }
+            
+            .exercise-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .exercise-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="page-number">Page 1</div>
+            <h1>Exercices de récapitulation sur l'adjectif</h1>
+            <div class="subtitle">CCDMD - Exercices de français</div>
+        </header>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <div class="exercise-nav" id="exerciseNav">
+            <!-- Les boutons de navigation seront générés par JavaScript -->
+        </div>
+        
+        <div class="main-content">
+            <!-- Section 1 -->
+            <div class="exercise-section active" id="exercise1">
+                <h2 class="exercise-title">EXERCICE 1</h2>
+                
+                <div class="exercise-instructions">
+                    <i class="fas fa-info-circle instructions-icon"></i>
+                    Dans les phrases suivantes, soulignez les adjectifs et encadrez le nom ou le pronom auquel l'adjectif est rattaché.
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-item-title">
+                        Phrase a)
+                        <button class="correction-btn" data-exercise="1a">Voir correction</button>
+                    </div>
+                    <div class="answer-area">
+                        <div class="poem">
+                            L'air est si <span class="answer-box" data-correct="parfumé">parfumé</span> ! la lumière est si <span class="answer-box" data-correct="pure">pure</span> !<br>
+                            Aux regards d'un <span class="answer-box" data-correct="mourant">mourant</span> le soleil est si <span class="answer-box" data-correct="beau">beau</span> !<br>
+                            <em>(Lamartine)</em>
+                        </div>
+                    </div>
+                    
+                    <div class="correction" id="correction1a">
+                        <div class="correction-title">Correction :</div>
+                        <div class="correction-text">
+                            Adjectifs : <span class="underline">parfumé</span>, <span class="underline">pure</span>, <span class="underline">mourant</span>, <span class="underline">beau</span><br>
+                            Noms associés : <span class="highlight">L'air</span>, <span class="highlight">la lumière</span>, <span class="highlight">le soleil</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-item-title">
+                        Phrase b)
+                        <button class="correction-btn" data-exercise="1b">Voir correction</button>
+                    </div>
+                    <div class="answer-area">
+                        <div class="poem">
+                            J'ai bien une <span class="answer-box" data-correct="terre">terre</span> <span class="answer-box" data-correct="libre">libre</span> à parcourir ; mais elle n'est pas assez <span class="answer-box" data-correct="sauvage">sauvage</span>, assez <span class="answer-box" data-correct="imposante">imposante</span>. Les formes en sont <span class="answer-box" data-correct="basses">basses</span> ; les roches <span class="answer-box" data-correct="petites">petites</span> et <span class="answer-box" data-correct="monotones">monotones</span>. Ma situation est <span class="answer-box" data-correct="douce">douce</span>, et je mène une <span class="answer-box" data-correct="triste">triste</span> vie. Je suis ici <span class="answer-box" data-correct="libre">libre</span>, <span class="answer-box" data-correct="tranquille">tranquille</span>, sans affaires, <span class="answer-box" data-correct="indifférent">indifférent</span> sur l'avenir dont je n'attends rien.<br>
+                            <em>(Adapté de Senancour)</em>
+                        </div>
+                    </div>
+                    
+                    <div class="correction" id="correction1b">
+                        <div class="correction-title">Correction :</div>
+                        <div class="correction-text">
+                            Adjectifs : <span class="underline">libre</span>, <span class="underline">sauvage</span>, <span class="underline">imposante</span>, <span class="underline">basses</span>, <span class="underline">petites</span>, <span class="underline">monotones</span>, <span class="underline">douce</span>, <span class="underline">triste</span>, <span class="underline">libre</span>, <span class="underline">tranquille</span>, <span class="underline">indifférent</span><br>
+                            Noms/pronoms associés : <span class="highlight">terre</span>, <span class="highlight">elle</span>, <span class="highlight">formes</span>, <span class="highlight">roches</span>, <span class="highlight">situation</span>, <span class="highlight">vie</span>, <span class="highlight">Je</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 2 -->
+            <div class="exercise-section" id="exercise2">
+                <h2 class="exercise-title">EXERCICE 2</h2>
+                
+                <div class="exercise-instructions">
+                    <i class="fas fa-info-circle instructions-icon"></i>
+                    Remplacez le nom propre par l'adjectif correspondant et accordez-le avec le nom auquel il est rattaché.
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-item-title">
+                        Complétez les phrases
+                        <button class="correction-btn" data-exercise="2">Voir correction</button>
+                    </div>
+                    
+                    <div class="answer-area">
+                        <table style="width:100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 8px; width: 50%;">a) Le premier ministre du Canada <input type="text" class="input-field" id="q2a" placeholder="canadien/canadienne"></td>
+                                <td style="padding: 8px;">b) Le président des États-Unis <input type="text" class="input-field" id="q2b" placeholder="américain/américaine"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;">c) Des mets de Chine <input type="text" class="input-field" id="q2c" placeholder="chinois/chinoise"></td>
+                                <td style="padding: 8px;">d) Un thé d'Angleterre <input type="text" class="input-field" id="q2d" placeholder="anglais/anglaise"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;">e) Le peuple de la Gaule <input type="text" class="input-field" id="q2e" placeholder="gaulois/gauloise"></td>
+                                <td style="padding: 8px;">f) Une chèvre des Alpes <input type="text" class="input-field" id="q2f" placeholder="alpin/alpine"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;">g) La monnaie du Pérou <input type="text" class="input-field" id="q2g" placeholder="péruvien/péruvienne"></td>
+                                <td style="padding: 8px;">h) Le maire de Montréal <input type="text" class="input-field" id="q2h" placeholder="montréalais/montréalaise"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;">i) Les héros de Balzac <input type="text" class="input-field" id="q2i" placeholder="balzacien/balzacienne"></td>
+                                <td style="padding: 8px;">j) Un prêtre du Rwanda <input type="text" class="input-field" id="q2j" placeholder="rwandais/rwandaise"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;">k) Le café de la Colombie <input type="text" class="input-field" id="q2k" placeholder="colombien/colombienne"></td>
+                                <td style="padding: 8px;">l) Une chatte d'Espagne <input type="text" class="input-field" id="q2l" placeholder="espagnol/espagnole"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;">m) Un vin de France <input type="text" class="input-field" id="q2m" placeholder="français/française"></td>
+                                <td style="padding: 8px;">n) Des épices de l'Inde <input type="text" class="input-field" id="q2n" placeholder="indien/indienne"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;">o) Une chanson de la Grèce <input type="text" class="input-field" id="q2o" placeholder="grec/grecque"></td>
+                                <td style="padding: 8px;">p) La musique de l'Afrique <input type="text" class="input-field" id="q2p" placeholder="africain/africaine"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;">q) Un cigare de Cuba <input type="text" class="input-field" id="q2q" placeholder="cubain/cubaine"></td>
+                                <td style="padding: 8px;">r) Les vedettes d'Hollywood <input type="text" class="input-field" id="q2r" placeholder="hollywoodien/hollywoodienne"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="correction" id="correction2">
+                        <div class="correction-title">Correction :</div>
+                        <div class="correction-text">
+                            a) canadien, b) américain, c) chinois, d) anglais, e) gaulois, f) alpine, g) péruvienne, h) montréalais, i) balzaciens, j) rwandais, k) colombien, l) espagnole, m) français, n) indiennes, o) grecque, p) africaine, q) cubain, r) hollywoodiennes
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 3 -->
+            <div class="exercise-section" id="exercise3">
+                <h2 class="exercise-title">EXERCICE 3</h2>
+                
+                <div class="exercise-instructions">
+                    <i class="fas fa-info-circle instructions-icon"></i>
+                    Accordez les adjectifs et soulignez le mot donneur d'accord.
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-item-title">
+                        Complétez les phrases
+                        <button class="correction-btn" data-exercise="3">Voir correction</button>
+                    </div>
+                    
+                    <div class="answer-area">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
+                            <div>a) des tables de chevet (brisé) <input type="text" class="input-field" id="q3a" placeholder="brisées"></div>
+                            <div>b) une bague en or (neuf) <input type="text" class="input-field" id="q3b" placeholder="neuve"></div>
+                            <div>c) un jeu de cartes (incomplet) <input type="text" class="input-field" id="q3c" placeholder="incomplet"></div>
+                            <div>d) une table de salon (massif) <input type="text" class="input-field" id="q3d" placeholder="massive"></div>
+                            <div>e) une planche de bois (dur) <input type="text" class="input-field" id="q3e" placeholder="dure"></div>
+                            <div>f) une verre d'eau (froid) <input type="text" class="input-field" id="q3f" placeholder="froide"></div>
+                            <div>g) un carton d'invitation (privilégié) <input type="text" class="input-field" id="q3g" placeholder="privilégié"></div>
+                            <div>h) une demande en mariage (imprévu) <input type="text" class="input-field" id="q3h" placeholder="imprévue"></div>
+                            <div>i) un discours de retraite (anticipé) <input type="text" class="input-field" id="q3i" placeholder="anticipé"></div>
+                            <div>j) une offre de services (bancaire) <input type="text" class="input-field" id="q3j" placeholder="bancaires"></div>
+                            <div>k) des produits de nettoyage (résidentiel) <input type="text" class="input-field" id="q3k" placeholder="résidentiels"></div>
+                            <div>l) des côtelettes de porc (épais) <input type="text" class="input-field" id="q3l" placeholder="épaisses"></div>
+                            <div>m) une tarte aux fruits (délicieux) <input type="text" class="input-field" id="q3m" placeholder="délicieuse"></div>
+                            <div>n) un bouquet de fleurs (séché) <input type="text" class="input-field" id="q3n" placeholder="séchées"></div>
+                            <div>o) un crémage de texture (velouté) <input type="text" class="input-field" id="q3o" placeholder="veloutée"></div>
+                            <div>p) l'arrivage des vins (nouveau) <input type="text" class="input-field" id="q3p" placeholder="nouveaux"></div>
+                            <div>q) une forêt de conifères (australien) <input type="text" class="input-field" id="q3q" placeholder="australienne"></div>
+                            <div>r) une soupe aux nouilles (chaud) <input type="text" class="input-field" id="q3r" placeholder="chaude"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="correction" id="correction3">
+                        <div class="correction-title">Correction :</div>
+                        <div class="correction-text">
+                            a) brisées, b) neuve, c) incomplet, d) massive, e) dure, f) froide, g) privilégié, h) imprévue, i) anticipé, j) bancaires, k) résidentiels, l) épaisses, m) délicieuse, n) séchées, o) veloutée, p) nouveaux, q) australienne, r) chaude
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 4 -->
+            <div class="exercise-section" id="exercise4">
+                <h2 class="exercise-title">EXERCICE 4</h2>
+                
+                <div class="exercise-instructions">
+                    <i class="fas fa-info-circle instructions-icon"></i>
+                    Accordez les adjectifs s'il y a lieu et encadrez leur donneur d'accord.
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-item-title">
+                        Complétez les phrases
+                        <button class="correction-btn" data-exercise="4">Voir correction</button>
+                    </div>
+                    
+                    <div class="answer-area">
+                        <div style="margin-bottom: 20px;">
+                            a) Cela est vrai<input type="text" class="input-field" style="width: 80px;" id="q4a1" placeholder="(accord?)">, elle a les yeux petit<input type="text" class="input-field" style="width: 80px;" id="q4a2" placeholder="(accord?)">; mais elle les a plein<input type="text" class="input-field" style="width: 80px;" id="q4a3" placeholder="(accord?)"> de feu, les plus brillant<input type="text" class="input-field" style="width: 80px;" id="q4a4" placeholder="(accord?)">, les plus perçant<input type="text" class="input-field" style="width: 80px;" id="q4a5" placeholder="(accord?)"> du monde, les plus touchant<input type="text" class="input-field" style="width: 80px;" id="q4a6" placeholder="(accord?)"> qu'on puisse voir. <em>(Molière)</em>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            b) C'est une fille fort jeune<input type="text" class="input-field" style="width: 80px;" id="q4b1" placeholder="(accord?)">, et si innocent<input type="text" class="input-field" style="width: 80px;" id="q4b2" placeholder="(accord?)"> qu'elle en est toute sot<input type="text" class="input-field" style="width: 80px;" id="q4b3" placeholder="(accord?)">. <em>(Antoine Furetière)</em>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            c) Le maître était absent<input type="text" class="input-field" style="width: 80px;" id="q4c1" placeholder="(accord?)">, ce lui fut chose aisé<input type="text" class="input-field" style="width: 80px;" id="q4c2" placeholder="(accord?)">. <em>(Jean de La Fontaine)</em>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            d) Ces grand<input type="text" class="input-field" style="width: 80px;" id="q4d1" placeholder="(accord?)"> et éclatant<input type="text" class="input-field" style="width: 80px;" id="q4d2" placeholder="(accord?)"> actions qui éblouissent leurs yeux sont représentées par les politiques comme les effets des grand<input type="text" class="input-field" style="width: 80px;" id="q4d3" placeholder="(accord?)"> desseins. <em>(François de La Rochefoucauld)</em>
+                        </div>
+                    </div>
+                    
+                    <div class="correction" id="correction4">
+                        <div class="correction-title">Correction :</div>
+                        <div class="correction-text">
+                            a) vrai, petits, pleins, brillants, perçants, touchants<br>
+                            b) jeune, innocente, sotte<br>
+                            c) absent, aisée<br>
+                            d) grandes, éclatantes, grands
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 5 -->
+            <div class="exercise-section" id="exercise5">
+                <h2 class="exercise-title">EXERCICE 5</h2>
+                
+                <div class="exercise-instructions">
+                    <i class="fas fa-info-circle instructions-icon"></i>
+                    Récrivez les phrases en utilisant le mot dans la parenthèse. Effectuez tous les changements nécessaires.
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-item-title">
+                        Réécrivez les phrases
+                        <button class="correction-btn" data-exercise="5">Voir correction</button>
+                    </div>
+                    
+                    <div class="answer-area">
+                        <div style="margin-bottom: 20px;">
+                            a) Ce prince (princesse) était galant, bien fait et amoureux.<br>
+                            <input type="text" class="input-field" id="q5a" placeholder="Réécrivez la phrase" style="width: 100%; margin-top: 10px;">
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            b) Ne craignez point de prendre des partis (personnes) trop rudes et trop difficiles, quelque affreux qu'ils vous paraissent d'abord : ils seront plus doux dans les suites que les malheurs d'une galanterie.<br>
+                            <input type="text" class="input-field" id="q5b" placeholder="Réécrivez la phrase" style="width: 100%; margin-top: 10px;">
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            c) Il (Elle) est tous les contraires : il est impérieux et obéissant, sincère et dissimulé, miséricordieux et cruel, timide et audacieux.<br>
+                            <input type="text" class="input-field" id="q5c" placeholder="Réécrivez la phrase" style="width: 100%; margin-top: 10px;">
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            d) L'on voit certains animaux (bêtes) farouches, des mâles et des femelles, répandus par la campagne, noirs, livides et tout brûlés du soleil, attachés à la terre qu'ils fouillent et qu'ils remuent avec une opiniâtreté invincible.<br>
+                            <input type="text" class="input-field" id="q5d" placeholder="Réécrivez la phrase" style="width: 100%; margin-top: 10px;">
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            e) À midi, ils virent un joli oiseau (tourterelle) sur une branche, blanc comme neige. Il chantait si bien que les enfants […] le suivirent jusqu'à une petite maison sur le toit de laquelle le bel oiseau blanc se percha.<br>
+                            <input type="text" class="input-field" id="q5e" placeholder="Réécrivez la phrase" style="width: 100%; margin-top: 10px;">
+                        </div>
+                    </div>
+                    
+                    <div class="correction" id="correction5">
+                        <div class="correction-title">Correction :</div>
+                        <div class="correction-text">
+                            a) Cette princesse était galante, bien faite et amoureuse.<br>
+                            b) Ne craignez point de prendre des personnes trop rudes et trop difficiles, quelque affreuses qu'elles vous paraissent d'abord : elles seront plus douces dans les suites que les malheurs d'une galanterie.<br>
+                            c) Elle est tous les contraires : elle est impérieuse et obéissante, sincère et dissimulée, miséricordieuse et cruelle, timide et audacieuse.<br>
+                            d) L'on voit certaines bêtes farouches, des mâles et des femelles, répandues par la campagne, noires, livides et toutes brûlées du soleil, attachées à la terre qu'elles fouillent et qu'elles remuent avec une opiniâtreté invincible.<br>
+                            e) À midi, ils virent une jolie tourterelle sur une branche, blanche comme neige. Elle chantait si bien que les enfants […] la suivirent jusqu'à une petite maison sur le toit de laquelle la belle tourterelle blanche se percha.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 6 -->
+            <div class="exercise-section" id="exercise6">
+                <h2 class="exercise-title">EXERCICE 6</h2>
+                
+                <div class="exercise-instructions">
+                    <i class="fas fa-info-circle instructions-icon"></i>
+                    Sur les lignes, récrivez le groupe nominal (GN) au singulier ;<br>
+                    Soulignez le bon déterminant (le, la, l'). Si un ou des mots dans le vers indiquent le genre du déterminant, encadrez-le.
+                </div>
+                
+                <div class="note">
+                    <strong>NOTE :</strong> En poésie, selon le style de l'auteur, celui-ci peut omettre la ponctuation dans le but de créer une musique et un rythme. Aussi, la majuscule apparaît toujours en début de vers.
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-item-title">
+                        Poème "Hymne à la liberté" de Paul Éluard
+                        <button class="correction-btn" data-exercise="6">Voir correction</button>
+                    </div>
+                    
+                    <div class="poem">
+                        <div class="verse"><span class="verse-number">1</span>Sur mes cahiers d'écolier</div>
+                        <div class="verse"><span class="verse-number">2</span>Sur mon pupitre et les arbres</div>
+                        <div class="verse"><span class="verse-number">3</span>Sur <select class="input-field" style="width: 70px; display: inline-block;">
+                            <option value="">choisir</option>
+                            <option value="le">le</option>
+                            <option value="la">la</option>
+                            <option value="l'">l'</option>
+                        </select> sable sur <select class="input-field" style="width: 70px; display: inline-block;">
+                            <option value="">choisir</option>
+                            <option value="le">le</option>
+                            <option value="la">la</option>
+                            <option value="l'">l'</option>
+                        </select> neige</div>
+                        <div class="verse"><span class="verse-number">4</span>J'écris ton nom</div>
+                        <div class="verse" style="margin-top: 15px;"><span
